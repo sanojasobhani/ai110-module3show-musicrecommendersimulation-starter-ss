@@ -46,10 +46,12 @@ class Recommender:
         self.songs = songs
 
     def recommend(self, user: UserProfile, k: int = 5) -> List[Song]:
+        """Return the top k songs best matching the given user profile."""
         # TODO: Implement recommendation logic
         return self.songs[:k]
 
     def explain_recommendation(self, user: UserProfile, song: Song) -> str:
+        """Return a human-readable explanation of why a song was recommended."""
         # TODO: Implement explanation logic
         return "Explanation placeholder"
 
@@ -97,24 +99,24 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     - +1.0 point for mood match
     - +0.0 to +1.5 points for energy similarity
     - +0.5 bonus for acousticness preference
-    
+
     Max possible score: 5.0 points (normalized to 1.0)
-    
+
     Expected return format: (score, reasons)
     """
     total_points = 0
     reasons = []
-    
+
     # Genre match: +2.0 points
     if song['genre'].lower() == user_prefs['genre'].lower():
         total_points += 2.0
         reasons.append(f"Genre match: {song['genre']}")
-    
+
     # Mood match: +1.0 point
     if song['mood'].lower() == user_prefs['mood'].lower():
         total_points += 1.0
         reasons.append(f"Mood match: {song['mood']}")
-    
+
     # Energy similarity: +0.0 to +1.5 points
     # Perfect match (distance = 0) gives 1.5 points
     # Worst match (distance = 1.0) gives 0 points
@@ -138,8 +140,70 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
     # Normalize score to 0-1 range (max possible is 5.0 points)
     max_possible_score = 2.0 + 1.0 + 1.5 + 0.5  # 5.0
     normalized_score = min(total_points / max_possible_score, 1.0)
-    
+
     return normalized_score, reasons
+
+
+# =============================================================================
+# EXPERIMENTAL VARIANT — "Weight Shift" sensitivity test
+# -----------------------------------------------------------------------------
+# Same logic as score_song() above, but with two weights changed to probe how
+# sensitive the rankings are to the scoring parameters:
+#   - Genre importance HALVED:   +2.0 -> +1.0
+#   - Energy importance DOUBLED: max +1.5 -> +3.0
+# The normalization denominator is updated to 5.5 accordingly so scores stay
+# within [0, 1] (a perfect match still normalizes to exactly 1.0).
+#
+# Observed effect on the sample data: top picks stay stable, but mid-pack
+# rankings compress and genre-matched songs can be overtaken by songs with a
+# near-perfect energy match (e.g. Chill Lofi's #3 flips from a lofi track to an
+# ambient one). To try it, un-comment this function and rename it to
+# score_song (and comment out the original above).
+#
+# def score_song_weight_shift(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
+#     """
+#     Weight-shift experiment scoring:
+#     - +1.0 point for genre match      (halved from 2.0)
+#     - +1.0 point for mood match
+#     - +0.0 to +3.0 points for energy similarity   (doubled from 1.5)
+#     - +0.5 bonus for acousticness preference
+#     Max possible score: 5.5 points (normalized to 1.0)
+#     """
+#     total_points = 0
+#     reasons = []
+#
+#     # Genre match: +1.0 point (halved importance)
+#     if song['genre'].lower() == user_prefs['genre'].lower():
+#         total_points += 1.0
+#         reasons.append(f"Genre match: {song['genre']}")
+#
+#     # Mood match: +1.0 point
+#     if song['mood'].lower() == user_prefs['mood'].lower():
+#         total_points += 1.0
+#         reasons.append(f"Mood match: {song['mood']}")
+#
+#     # Energy similarity: +0.0 to +3.0 points (doubled importance)
+#     energy_distance = abs(song['energy'] - user_prefs['energy'])
+#     energy_points = max(0, 3.0 * (1 - energy_distance))
+#     total_points += energy_points
+#     reasons.append(f"Energy alignment: {energy_points:.2f} pts (target: {user_prefs['energy']}, song: {song['energy']})")
+#
+#     # Acousticness preference: +0.0 to +0.5 bonus
+#     if user_prefs['likes_acoustic']:
+#         acoustic_score = song['acousticness'] * 0.5
+#         total_points += acoustic_score
+#         reasons.append(f"Acousticness bonus: {acoustic_score:.2f} pts")
+#     else:
+#         acoustic_penalty = (1 - song['acousticness']) * 0.5
+#         total_points += acoustic_penalty
+#         reasons.append(f"Non-acoustic preference: {acoustic_penalty:.2f} pts")
+#
+#     # Normalize score to 0-1 range (max possible is 5.5 points after weight shift)
+#     max_possible_score = 1.0 + 1.0 + 3.0 + 0.5  # 5.5
+#     normalized_score = min(total_points / max_possible_score, 1.0)
+#
+#     return normalized_score, reasons
+# =============================================================================
 
 def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
     """

@@ -139,6 +139,129 @@ Successfully loaded 16 songs.
 ============================================================
 ```
 
+```
+============================================================
+           TOP RECOMMENDATIONS - High-Energy Pop            
+============================================================
+
+1. Sunrise City - Neon Echo
+   Score: 0.96 / 1.00
+   Reasons:
+     - Genre match: pop
+     - Mood match: happy
+     - Energy alignment: 1.38 pts (target: 0.9, song: 0.82)
+     - Non-acoustic preference: 0.41 pts
+
+2. Gym Hero - Max Pulse
+   Score: 0.79 / 1.00
+   Reasons:
+     - Genre match: pop
+     - Energy alignment: 1.46 pts (target: 0.9, song: 0.93)
+     - Non-acoustic preference: 0.47 pts
+
+3. Rooftop Lights - Indigo Parade
+   Score: 0.52 / 1.00
+   Reasons:
+     - Mood match: happy
+     - Energy alignment: 1.29 pts (target: 0.9, song: 0.76)
+     - Non-acoustic preference: 0.33 pts
+
+4. Storm Runner - Voltline
+   Score: 0.39 / 1.00
+   Reasons:
+     - Energy alignment: 1.48 pts (target: 0.9, song: 0.91)
+     - Non-acoustic preference: 0.45 pts
+
+5. Golden Skyline - The Brass Line
+   Score: 0.38 / 1.00
+   Reasons:
+     - Energy alignment: 1.47 pts (target: 0.9, song: 0.88)
+     - Non-acoustic preference: 0.44 pts
+
+============================================================
+
+============================================================
+              TOP RECOMMENDATIONS - Chill Lofi              
+============================================================
+
+1. Library Rain - Paper Lanterns
+   Score: 0.97 / 1.00
+   Reasons:
+     - Genre match: lofi
+     - Mood match: chill
+     - Energy alignment: 1.42 pts (target: 0.3, song: 0.35)
+     - Acousticness bonus: 0.43 pts
+
+2. Midnight Coding - LoRoom
+   Score: 0.94 / 1.00
+   Reasons:
+     - Genre match: lofi
+     - Mood match: chill
+     - Energy alignment: 1.32 pts (target: 0.3, song: 0.42)
+     - Acousticness bonus: 0.35 pts
+
+3. Focus Flow - LoRoom
+   Score: 0.75 / 1.00
+   Reasons:
+     - Genre match: lofi
+     - Energy alignment: 1.35 pts (target: 0.3, song: 0.4)
+     - Acousticness bonus: 0.39 pts
+
+4. Spacewalk Thoughts - Orbit Bloom
+   Score: 0.59 / 1.00
+   Reasons:
+     - Mood match: chill
+     - Energy alignment: 1.47 pts (target: 0.3, song: 0.28)
+     - Acousticness bonus: 0.46 pts
+
+5. Midnight Sonata - Elara Quinn
+   Score: 0.39 / 1.00
+   Reasons:
+     - Energy alignment: 1.48 pts (target: 0.3, song: 0.29)
+     - Acousticness bonus: 0.47 pts
+
+============================================================
+
+============================================================
+          TOP RECOMMENDATIONS - Deep Intense Rock           
+============================================================
+
+1. Storm Runner - Voltline
+   Score: 0.97 / 1.00
+   Reasons:
+     - Genre match: rock
+     - Mood match: intense
+     - Energy alignment: 1.41 pts (target: 0.85, song: 0.91)
+     - Non-acoustic preference: 0.45 pts
+
+2. Gym Hero - Max Pulse
+   Score: 0.57 / 1.00
+   Reasons:
+     - Mood match: intense
+     - Energy alignment: 1.38 pts (target: 0.85, song: 0.93)
+     - Non-acoustic preference: 0.47 pts
+
+3. Concrete Glow - Northside Crew
+   Score: 0.38 / 1.00
+   Reasons:
+     - Energy alignment: 1.48 pts (target: 0.85, song: 0.84)
+     - Non-acoustic preference: 0.42 pts
+
+4. Golden Skyline - The Brass Line
+   Score: 0.38 / 1.00
+   Reasons:
+     - Energy alignment: 1.46 pts (target: 0.85, song: 0.88)
+     - Non-acoustic preference: 0.44 pts
+
+5. Sunrise City - Neon Echo
+   Score: 0.37 / 1.00
+   Reasons:
+     - Energy alignment: 1.46 pts (target: 0.85, song: 0.82)
+     - Non-acoustic preference: 0.41 pts
+
+============================================================
+```
+
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
 
 ---

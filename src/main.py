@@ -11,35 +11,57 @@ You will implement the functions in recommender.py:
 
 try:
     # Works when run as a module from the project root: python -m src.main
-    from src.recommender import DEFAULT_TASTE_PROFILE, load_songs, recommend_songs
+    from src.recommender import load_songs, recommend_songs
 except ModuleNotFoundError:
     # Works when run directly from inside src/: python main.py
-    from recommender import DEFAULT_TASTE_PROFILE, load_songs, recommend_songs
+    from recommender import load_songs, recommend_songs
+
+
+# Three distinct user taste profiles used to compare recommendations.
+# Each dict matches the keys expected by recommender.score_song:
+# genre, mood, energy (0.0-1.0), and likes_acoustic (bool).
+USER_PROFILES = {
+    # Upbeat pop fan: loud, happy, high-energy, no acoustic tracks.
+    "High-Energy Pop": {
+        "genre": "pop",
+        "mood": "happy",
+        "energy": 0.9,
+        "likes_acoustic": False,
+    },
+    # Laid-back listener: mellow lofi for focus, low energy, acoustic-friendly.
+    "Chill Lofi": {
+        "genre": "lofi",
+        "mood": "chill",
+        "energy": 0.3,
+        "likes_acoustic": True,
+    },
+    # Hard-hitting rock fan: aggressive, high-energy, electric (non-acoustic).
+    "Deep Intense Rock": {
+        "genre": "rock",
+        "mood": "intense",
+        "energy": 0.85,
+        "likes_acoustic": False,
+    },
+}
 
 
 def main() -> None:
-    songs = load_songs("data/songs.csv") 
+    songs = load_songs("data/songs.csv")
 
-    # Specific taste profile used for comparisons:
-    # prefers pop/happy songs with high energy and avoids acoustic tracks.
-    user_prefs = {
-        "genre": DEFAULT_TASTE_PROFILE.favorite_genre,
-        "mood": DEFAULT_TASTE_PROFILE.favorite_mood,
-        "energy": DEFAULT_TASTE_PROFILE.target_energy,
-        "likes_acoustic": DEFAULT_TASTE_PROFILE.likes_acoustic,
-    }
-
-    recommendations = recommend_songs(user_prefs, songs, k=5)
-
-    print_recommendations(recommendations)
+    # Generate and print recommendations for each taste profile so the
+    # differences between profiles are easy to compare in the terminal.
+    for profile_name, user_prefs in USER_PROFILES.items():
+        recommendations = recommend_songs(user_prefs, songs, k=5)
+        print_recommendations(recommendations, profile_name)
 
 
-def print_recommendations(recommendations) -> None:
+def print_recommendations(recommendations, profile_name: str = "") -> None:
     """Print recommendations in a clean, ranked terminal layout."""
     width = 60
+    title = f"TOP RECOMMENDATIONS - {profile_name}" if profile_name else "TOP RECOMMENDATIONS"
     print()
     print("=" * width)
-    print("TOP RECOMMENDATIONS".center(width))
+    print(title.center(width))
     print("=" * width)
 
     for rank, (song, score, explanation) in enumerate(recommendations, start=1):
