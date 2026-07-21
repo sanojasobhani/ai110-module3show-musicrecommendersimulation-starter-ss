@@ -1,5 +1,6 @@
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
+from operator import itemgetter
 
 @dataclass
 class Song:
@@ -148,13 +149,12 @@ def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tup
     Expected return format: (song_dict, score, explanation)
     """
     scored_songs = []
-    
+
     # Score each song
     for song in songs:
         score, reasons = score_song(user_prefs, song)
         explanation = " | ".join(reasons)
         scored_songs.append((song, score, explanation))
-    
+
     # Sort by score (descending) and return top k
-    scored_songs.sort(key=lambda x: x[1], reverse=True)
-    return scored_songs[:k]
+    return sorted(scored_songs, key=itemgetter(1), reverse=True)[:k]

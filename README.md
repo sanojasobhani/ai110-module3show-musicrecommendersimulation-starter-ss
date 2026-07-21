@@ -94,12 +94,49 @@ You can add more tests in `tests/test_recommender.py`.
 Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
 
 ```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+PS C:\Users\sanoj\OneDrive\Desktop\vs code\ai110-module3show-musicrecommendersimulation-starter-ss> python -m src.main                        
+Loading songs from data/songs.csv...                                        
+Successfully loaded 16 songs.        
+                                                            
+============================================================
+                    TOP RECOMMENDATIONS                                                                                                      
+============================================================                     
+                                                     
+1. Sunrise City - Neon Echo
+   Score: 0.98 / 1.00
+   Reasons:
+     - Genre match: pop
+     - Mood match: happy
+     - Energy alignment: 1.47 pts (target: 0.8, song: 0.82)
+     - Non-acoustic preference: 0.41 pts
+
+2. Gym Hero - Max Pulse
+   Score: 0.76 / 1.00
+   Reasons:
+     - Genre match: pop
+     - Energy alignment: 1.30 pts (target: 0.8, song: 0.93)
+     - Non-acoustic preference: 0.47 pts
+
+3. Rooftop Lights - Indigo Parade
+   Score: 0.55 / 1.00
+   Reasons:
+     - Mood match: happy
+     - Energy alignment: 1.44 pts (target: 0.8, song: 0.76)
+     - Non-acoustic preference: 0.33 pts
+
+4. Concrete Glow - Northside Crew
+   Score: 0.37 / 1.00
+   Reasons:
+     - Energy alignment: 1.44 pts (target: 0.8, song: 0.84)
+     - Non-acoustic preference: 0.42 pts
+
+5. Golden Skyline - The Brass Line
+   Score: 0.36 / 1.00
+   Reasons:
+     - Energy alignment: 1.38 pts (target: 0.8, song: 0.88)
+     - Non-acoustic preference: 0.44 pts
+
+============================================================
 ```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->

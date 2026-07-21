@@ -9,7 +9,12 @@ You will implement the functions in recommender.py:
 - recommend_songs
 """
 
-from recommender import DEFAULT_TASTE_PROFILE, load_songs, recommend_songs
+try:
+    # Works when run as a module from the project root: python -m src.main
+    from src.recommender import DEFAULT_TASTE_PROFILE, load_songs, recommend_songs
+except ModuleNotFoundError:
+    # Works when run directly from inside src/: python main.py
+    from recommender import DEFAULT_TASTE_PROFILE, load_songs, recommend_songs
 
 
 def main() -> None:
@@ -26,14 +31,26 @@ def main() -> None:
 
     recommendations = recommend_songs(user_prefs, songs, k=5)
 
-    print("\nTop recommendations:\n")
-    for rec in recommendations:
-        # You decide the structure of each returned item.
-        # A common pattern is: (song, score, explanation)
-        song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+    print_recommendations(recommendations)
+
+
+def print_recommendations(recommendations) -> None:
+    """Print recommendations in a clean, ranked terminal layout."""
+    width = 60
+    print()
+    print("=" * width)
+    print("TOP RECOMMENDATIONS".center(width))
+    print("=" * width)
+
+    for rank, (song, score, explanation) in enumerate(recommendations, start=1):
+        header = f"{rank}. {song['title']} - {song['artist']}"
+        print(f"\n{header}")
+        print(f"   Score: {score:.2f} / 1.00")
+        print("   Reasons:")
+        for reason in explanation.split(" | "):
+            print(f"     - {reason}")
+
+    print("\n" + "=" * width)
 
 
 if __name__ == "__main__":
