@@ -11,7 +11,7 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
-Replace this paragraph with your own summary of what your version does.
+My version is called **VibeMatch 1.0**. It takes a user's taste profile (favorite genre, favorite mood, target energy, and acoustic preference) and scores every song in a small catalog against it. Each song earns points for matching the genre, matching the mood, having similar energy, and fitting the acoustic preference. The songs are then sorted from best to worst, and the top five are shown with a short list of reasons for each pick. I tested it with three different listener profiles and a set of edge-case profiles to see where the scoring works well and where it breaks.
 
 ---
 
@@ -268,25 +268,29 @@ Successfully loaded 16 songs.
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
+Here are the experiments I ran:
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+1. Three user profiles: I built three listener profiles (High-Energy Pop, Chill Lofi, Deep Intense Rock) and ran them all against the same 16 songs. Each one produced a clearly different top list, which showed the preferences were actually steering the results. See the sample output above.
+
+2. Weight shift (energy vs. genre): I doubled the weight on energy (1.5 to 3.0) and halved the weight on genre (2.0 to 1.0) to see how sensitive the rankings were. I also updated the max score to 5.5 so the math stayed valid and scores stayed between 0 and 1. Result: the top picks mostly stayed the same, but the middle of the lists shuffled. For the Chill Lofi user, the #3 spot flipped from a lofi song to an ambient one, because a near-perfect energy match now mattered more than a genre match. I kept the original weights and saved this version as a commented-out experiment in `src/recommender.py`.
+
+3. Edge-case / adversarial profiles: I tried to trick the scorer with impossible and contradictory tastes, for example a "metal / angry" genre that doesn't exist, and a "high energy but sad" profile. The system never errors and always returns five confident-looking songs, even when nothing truly matches. This is the biggest weakness I found and is documented in the model card.
+
+4. Different user types: Clear tastes (loud happy pop) gave clean, obvious results. Opposite tastes (chill lofi vs. intense rock) almost never shared songs. Unusual tastes outside the catalog got weak, misleading matches.
 
 ---
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
+Some limitations of VibeMatch:
 
-Examples:
+- Tiny catalog: Only 16 songs, and most genres have just one song. A user with an uncommon taste may get only one real match, or none.
+- No "no match" option: The system always returns five songs, even when nothing fits. It can't tell the user "I don't have anything good for you."
+- All-or-nothing genre and mood: "pop" and "indie pop" count as a total mismatch, even though they're close.
+- Energy and genre outweigh mood: Because of how the points are set, a song with the wrong mood can still rank near the top (the "Gym Hero" effect).
+- It doesn't understand music: No lyrics, no language, no artist popularity, no release year. It only compares the numbers and labels it's given.
 
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
+I go deeper on these in the [model card](model_card.md).
 
 ---
 
@@ -296,10 +300,9 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-Write 1 to 2 paragraphs here about what you learned:
+Building this taught me that a recommender is really just a scoring rule. It doesn't understand music at all. It turns preferences and song details into numbers, adds up points for the things I told it to care about, and sorts the results. The "prediction" is simply whichever song scored highest. Once I saw that, recommendations felt a lot less magical and a lot more like a set of choices someone made about what counts.
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
+Using AI helped me fast track writing code, deciding cases, building examples profiles, etc etc, but I often needed to double check to make sure the AI wasn't going overboard, esp when it came to using Claude (I noticed Copilot did not overdo as much as Claude did).
 
 
 
